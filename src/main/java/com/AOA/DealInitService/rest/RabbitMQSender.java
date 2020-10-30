@@ -1,20 +1,17 @@
 package com.AOA.DealInitService.rest;
 
-import com.AOA.DealInitService.dto.DealDto;
 import com.AOA.DealInitService.model.Deal;
-import com.AOA.DealInitService.service.DealService;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
+@RequestMapping(value="/dealInitService")
+public class RabbitMQSender {
 
-@RestController
-public class DealRessources {
-    @Autowired
-    private DealService dealService;
     @Autowired
     AmqpTemplate rabbitTemplate;
 
@@ -25,24 +22,9 @@ public class DealRessources {
     private String routingkey;
 
     @PostMapping(value="/deal")
-    public void create(@RequestBody Deal deal){
+    public void send(@RequestBody Deal deal) {
         rabbitTemplate.convertAndSend(exchange, routingkey, deal);
         System.out.println("Send msg = " + deal);
+
     }
-    /*
-    @PostMapping(value="/deal")
-    public Deal create(@RequestBody Deal deal){
-        String userList = deal.getListUser().join(",", userList);
-        sendRequest(userList);
-    }*/
-
-    /*@GetMapping(value="/deal")
-    public Deal sendRequest(List<String> user){
-        return
-    }*/
-
-
-
-
-
 }

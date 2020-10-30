@@ -17,9 +17,16 @@ public class Deal {
     @Id
     private Long id;
     private List<String> listUser;
+
+    private String nameDeal;
+    private String code;
     private Integer price;
-    private String firstname;
-    private String lastname;
+    private String zone;
+    private String devise;
+
+    private String nameBrower;
+    private String nameLender;
+    private String statut;
     private String mail;
     private String phone;
 
@@ -33,8 +40,8 @@ public class Deal {
     public DealUserDto toDealUserDto (){
         return DealUserDto
                 .builder()
-                .firstname(this.firstname)
-                .lastname(this.lastname)
+                .borower(this.nameBrower)
+                .lender(this.nameLender)
                 .mail(this.mail)
                 .phone(this.phone)
                 .build();
